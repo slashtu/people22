@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  cache:
+    image: redis # -> redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/go/data/people22:/data
+    # links:
+      # -  go:go
+    tty: true
+  go:
+    image: golang
+    ports:
+      - 80:8080
+    volumes:
+      - ~/go/src/people22/:/go/src/app
+    links:
+      - cache:cache
+    tty: true
